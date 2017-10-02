@@ -10,7 +10,7 @@ class Category(models.Model):
 class Tag(models.Model):
     # 标签
     name = models.CharField(max_length=100)
-    def __srt__(self):
+    def __str__(self):
         return self.name
 
 class Post(models.Model):
