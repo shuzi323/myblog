@@ -4,6 +4,7 @@ from .models import Post, Category
 from comments.forms import CommentForm
 import markdown
 from django.views.generic import ListView, DetailView
+from django.db.models import Q
 
 class IndexView(ListView):
     model = Post
@@ -138,3 +139,23 @@ class CategoryView(IndexView):
     def get_queryset(IndexView):
         cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))
         return super(CategoryView,self).get_queryset().filter(category=cate)
+
+class TagView(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        return super(TagView, self).get_queryset().filter(tags=tag)
+
+def search(request):
+    q = request.GET.get('q')
+    error_msg = ''
+
+    if not q:
+        error_msg = "请输入关键词"
+        return render(request, 'blog/index.html', {'error_msg': error_msg})
+
+    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
+    return render(request, 'blog/index.html', {'error_msg': error_msg,
+                                               'post_list': post_list})
