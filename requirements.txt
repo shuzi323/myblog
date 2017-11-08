@@ -1,0 +1,12 @@
+dj-database-url==0.4.2
+dj-static==0.0.6
+Django==1.10.6
+django-haystack==2.6.1
+gunicorn==19.7.1
+jieba==0.39
+Markdown==2.6.9
+Pygments==2.2.0
+pytz==2017.2
+static3==0.7.0
+Whoosh==2.7.4
+psycopg2>=2.6.1
